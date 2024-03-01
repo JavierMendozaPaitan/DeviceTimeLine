@@ -4,11 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DataProvider.Model.Abstractions;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace DataProvider.Models
 {
     public class DeviceTimeStatusRepository : ICollectionRepository
     {
+        [BsonId]
         public string? Id { get; set; }
         public string? SerialNumber { get; set; }
         public DeviceStatusRepository Status { get; set; }

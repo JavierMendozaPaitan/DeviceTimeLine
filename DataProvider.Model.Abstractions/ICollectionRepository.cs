@@ -8,7 +8,7 @@ namespace DataProvider.Model.Abstractions
 {
     public interface ICollectionRepository
     {
-        string Id { get; set; }
+        string? Id { get; set; }
         DateTime CreateDate { get; set; }
         DateTime UpdateDate { get; set; }
     }

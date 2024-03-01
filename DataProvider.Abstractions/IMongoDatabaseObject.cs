@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DataProvider.Models;
+using MongoDB.Driver;
 
 namespace DataProvider.Abstractions
 {
-    public interface IDeviceRepositoryService
+    public interface IMongoDatabaseObject
     {
-        Task<List<DeviceRepository>> GetDevicesAsync();
-        void AddDeviceAsync();
+        string Name { get; }
+        IMongoClient Client { get; }
+        IMongoDatabase Database { get; }
     }
 }
