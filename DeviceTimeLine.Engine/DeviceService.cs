@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DataProvider.Abstractions;
+using DataProvider.Models;
 using DeviceTimeLine.Abstractions;
 using DeviceTimeLine.Models;
 using DeviceTimeLine.Models.ViewModels;
@@ -25,6 +26,31 @@ namespace DeviceTimeLine.Engine
             _deviceRepositoryService = deviceRepositoryService;
             _deviceTimeStatusService = deviceTimeStatusService;
         }
+
+        public async void CreateDeviceAsync(DeviceViewModel device)
+        {
+            if(string.IsNullOrEmpty(device.SerialNumber)) { return; }
+
+            var deviceRepository = new DeviceRepository
+            {
+                 SerialNumber = device.SerialNumber,
+                 Name = device.DeviceName,
+                 Status = (DeviceStatusRepository)Enum.Parse(typeof(DeviceStatusRepository), device.CurrentStatus.ToString())                 
+            };
+
+            await Task.Run(()=>_deviceRepositoryService.AddDevice(deviceRepository));
+        }
+
+        public async void DeleteDeviceAsync(string deviceId)
+        {
+            if(string.IsNullOrEmpty(deviceId)) return;
+            var deviceRepository = new DeviceRepository
+            {
+                Id = deviceId
+            };
+            await Task.Run(() => _deviceRepositoryService.RemoveDevice(deviceRepository));
+        }
+
         public async Task<List<DeviceViewModel>> GetDevicesAsync()
         {
             var deviceViewList = new List<DeviceViewModel>();
@@ -33,6 +59,7 @@ namespace DeviceTimeLine.Engine
             {
                 var deviceViewModel = new DeviceViewModel
                 {
+                    Id = device.Id,
                     SerialNumber = device.SerialNumber,
                     DeviceName = device.Name,
                     CurrentStatus = (DeviceStatus)Enum.Parse( typeof(DeviceStatus), device.Status.ToString()),

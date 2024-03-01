@@ -1,20 +1,21 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using DataProvider.Abstractions;
+using DeviceTimeLine.Abstractions;
+using DeviceTimeLine.Models.ViewModels;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DeviceTimeLine.WebApp.Controllers
 {
     public class DeviceController : Controller
     {
-        // GET: DeviceController
-        public ActionResult Index()
+        private readonly ILogger<DeviceController> _logger;
+        private readonly IDeviceService _deviceService;
+        public DeviceController(
+            ILogger<DeviceController> logger, 
+            IDeviceService deviceService)
         {
-            return View();
-        }
-
-        // GET: DeviceController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
+            _logger = logger;
+            _deviceService = deviceService;
         }
 
         // GET: DeviceController/Create
@@ -26,14 +27,17 @@ namespace DeviceTimeLine.WebApp.Controllers
         // POST: DeviceController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(DeviceViewModel device)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                _deviceService.CreateDeviceAsync(device);
+
+                return RedirectToAction(nameof(Index), "Home");
             }
             catch
             {
+                _logger.LogError("Problems creating device");
                 return View();
             }
         }
@@ -60,24 +64,19 @@ namespace DeviceTimeLine.WebApp.Controllers
         }
 
         // GET: DeviceController/Delete/5
-        public ActionResult Delete(int id)
+        public IActionResult Delete(string id)
         {
-            return View();
+            if (id.Equals(Guid.Empty)) return NotFound();
+
+            _deviceService.DeleteDeviceAsync(id);
+
+            return RedirectToAction(nameof(Index), "Home");
         }
 
-        // POST: DeviceController/Delete/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public IActionResult Cancel()
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            return RedirectToAction(nameof(Index), "Home");
         }
     }
 }

@@ -36,11 +36,11 @@ namespace DataProvider.Engine
             await _collection.InsertOneAsync(obj);
         }
 
-        public void Remove(T obj)
+        public async void Remove(T obj)
         {
             if (obj == null) throw new ArgumentNullException(nameof(obj));
 
-            _collection.DeleteOne<T>(x => ((ICollectionRepository)x).Id == ((ICollectionRepository)obj).Id);
+            await _collection.DeleteOneAsync<T>(x => ((ICollectionRepository)x).Id == ((ICollectionRepository)obj).Id);
         }
 
         public async Task<List<T>> SelectAll()

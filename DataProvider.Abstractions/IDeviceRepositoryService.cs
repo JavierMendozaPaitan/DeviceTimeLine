@@ -10,6 +10,7 @@ namespace DataProvider.Abstractions
     public interface IDeviceRepositoryService
     {
         Task<List<DeviceRepository>> GetDevicesAsync();
-        void AddDeviceAsync();
+        void AddDevice(DeviceRepository device);
+        void RemoveDevice(DeviceRepository device);
     }
 }

@@ -11,6 +11,8 @@ namespace DeviceTimeLine.Abstractions
     public interface IDeviceService
     {
         Task<List<DeviceViewModel>> GetDevicesAsync();
+        void CreateDeviceAsync(DeviceViewModel device);
+        void DeleteDeviceAsync(string deviceId);
         Task<List<DeviceTimeStatus>> GetDeviceTimeStatusListAsync();
     }
 }
