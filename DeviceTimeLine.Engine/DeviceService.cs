@@ -27,6 +27,21 @@ namespace DeviceTimeLine.Engine
             _deviceTimeStatusService = deviceTimeStatusService;
         }
 
+        public async void AddDeviceTimeStatusAsync(DeviceTimeStatus deviceTimeStatus)
+        {
+            if (string.IsNullOrEmpty(deviceTimeStatus.SerialNumber)) { return; }
+
+            var deviceTimeRepository = new DeviceTimeStatusRepository
+            {
+                SerialNumber = deviceTimeStatus.SerialNumber,
+                Status = (DeviceStatusRepository)Enum.Parse(typeof(DeviceStatusRepository), deviceTimeStatus.Status.ToString()),
+                StartDate = deviceTimeStatus.StartDate,
+                EndDate = deviceTimeStatus.EndDate
+            };
+
+            await Task.Run(() => _deviceTimeStatusService.AddDeviceTimeStatus(deviceTimeRepository));
+        }
+
         public async void CreateDeviceAsync(DeviceViewModel device)
         {
             if(string.IsNullOrEmpty(device.SerialNumber)) { return; }

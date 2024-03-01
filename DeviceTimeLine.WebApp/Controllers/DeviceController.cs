@@ -1,5 +1,6 @@
 ﻿using DataProvider.Abstractions;
 using DeviceTimeLine.Abstractions;
+using DeviceTimeLine.Models;
 using DeviceTimeLine.Models.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -32,6 +33,28 @@ namespace DeviceTimeLine.WebApp.Controllers
             try
             {
                 _deviceService.CreateDeviceAsync(device);
+
+                return RedirectToAction(nameof(Index), "Home");
+            }
+            catch
+            {
+                _logger.LogError("Problems creating device");
+                return View();
+            }
+        }
+
+        public ActionResult AddDeviceTimeStatus()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddDeviceTimeStatus(DeviceTimeStatus deviceTimeStatus)
+        {
+            try
+            {
+                _deviceService.AddDeviceTimeStatusAsync(deviceTimeStatus);
 
                 return RedirectToAction(nameof(Index), "Home");
             }

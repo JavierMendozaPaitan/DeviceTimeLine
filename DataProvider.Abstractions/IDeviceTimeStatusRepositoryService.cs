@@ -10,6 +10,6 @@ namespace DataProvider.Abstractions
     public interface IDeviceTimeStatusRepositoryService
     {
         Task<List<DeviceTimeStatusRepository>> GetDeviceTimeStatusesAsync();
-        void AddDeviceTimeStatusAsync();
+        void AddDeviceTimeStatus(DeviceTimeStatusRepository deviceTimeStatus);
     }
 }

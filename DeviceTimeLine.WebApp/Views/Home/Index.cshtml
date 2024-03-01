@@ -78,9 +78,8 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.LastUpdateDate)
                 </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                <td>                    
+                    <a asp-controller="Device" asp-action="AddDeviceTimeStatus" >Add TimeStatus</a> |
                     <a asp-controller="Device" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                 </td>
             </tr>
