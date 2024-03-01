@@ -1,0 +1,89 @@
+﻿@model DeviceTimeLine.Models.ViewModels.DeviceTimeLineViewModel
+
+@{
+    ViewData["Title"] = "Visualize Device TimeLine";
+}
+
+<div class="text-center">
+    <h6 class="display-4">TimeLines</h6>
+</div>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+    google.charts.load("current", { packages: ["timeline"] });
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+        var array = JSON.parse(@Html.Raw(Json.Serialize(@Model.SerializedData)));
+        var container = document.getElementById('timeline');
+        var chart = new google.visualization.Timeline(container);
+        var dataTable = new google.visualization.DataTable();
+        dataTable.addColumn({ type: 'string', id: 'Device' });
+        dataTable.addColumn({ type: 'string', id: 'Status' });
+        dataTable.addColumn({ type: 'date', id: 'Start' });
+        dataTable.addColumn({ type: 'date', id: 'End' });
+        const rows = [];
+        for (var i = 0; i < array.length; i++) {
+            var startDate = new Date(array[i].StartDateString);
+            var endDate = new Date(array[i].EndDateString);
+            var row = [array[i].SerialNumber, array[i].Status, startDate, endDate];
+            rows.push(row);
+        }
+        dataTable.addRows(rows);
+
+        //var options = {
+        //    timeline: { colorByRowLabel: true }
+        //};
+
+        //chart.draw(dataTable, options);
+        chart.draw(dataTable);
+    }
+</script>
+
+<div id="wrapper">
+    <div id="timeline" style="height:auto;"></div>
+</div>
+<p>
+    <a asp-action="Create">Create New Device</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Devices.First().SerialNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Devices.First().DeviceName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Devices.First().CurrentStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Devices.First().LastUpdateDate)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Devices)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SerialNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DeviceName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CurrentStatus)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastUpdateDate)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
