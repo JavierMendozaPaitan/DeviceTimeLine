@@ -27,5 +27,10 @@ namespace DataProvider.Engine
 
             return deviceTimeStatuses;
         }
+
+        public void RemoveDeviceTimeStatus(DeviceTimeStatusRepository deviceTimeStatus)
+        {
+            _deviceTimeStatus.Remove(deviceTimeStatus);
+        }
     }
 }

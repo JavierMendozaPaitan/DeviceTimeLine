@@ -19,6 +19,13 @@ namespace DeviceTimeLine.WebApp.Controllers
             _deviceService = deviceService;
         }
 
+        public async Task<IActionResult> DeviceTimeStatus()
+        {
+            var deviceTimeStatusList = await _deviceService.GetDeviceTimeStatusListAsync();
+
+            return View(deviceTimeStatusList);
+        }
+
         // GET: DeviceController/Create
         public ActionResult Create()
         {
@@ -65,27 +72,6 @@ namespace DeviceTimeLine.WebApp.Controllers
             }
         }
 
-        // GET: DeviceController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: DeviceController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
         // GET: DeviceController/Delete/5
         public IActionResult Delete(string id)
         {
@@ -94,6 +80,15 @@ namespace DeviceTimeLine.WebApp.Controllers
             _deviceService.DeleteDeviceAsync(id);
 
             return RedirectToAction(nameof(Index), "Home");
+        }
+
+        public IActionResult DeleteTimeStatus(string id)
+        {
+            if (id.Equals(Guid.Empty)) return NotFound();
+
+            _deviceService.DeleteDeviceTimeStatusAsync(id);
+
+            return RedirectToAction(nameof(DeviceTimeStatus));
         }
 
         [HttpPost]

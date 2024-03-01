@@ -8,6 +8,7 @@ namespace DeviceTimeLine.Models
 {
     public class DeviceTimeStatus
     {
+        public string? Id { get; set; }
         public string? SerialNumber { get; set; }
         public DeviceStatus Status { get; set; }
         public DateTime StartDate { get; set; }

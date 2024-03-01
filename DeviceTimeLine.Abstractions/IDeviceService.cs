@@ -15,5 +15,6 @@ namespace DeviceTimeLine.Abstractions
         void DeleteDeviceAsync(string deviceId);
         Task<List<DeviceTimeStatus>> GetDeviceTimeStatusListAsync();
         void AddDeviceTimeStatusAsync(DeviceTimeStatus deviceTimeStatus);
+        void DeleteDeviceTimeStatusAsync(string deviceTimeStatusId);
     }
 }

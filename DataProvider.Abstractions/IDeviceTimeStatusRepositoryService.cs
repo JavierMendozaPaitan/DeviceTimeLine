@@ -11,5 +11,6 @@ namespace DataProvider.Abstractions
     {
         Task<List<DeviceTimeStatusRepository>> GetDeviceTimeStatusesAsync();
         void AddDeviceTimeStatus(DeviceTimeStatusRepository deviceTimeStatus);
+        void RemoveDeviceTimeStatus(DeviceTimeStatusRepository deviceTimeStatus);
     }
 }

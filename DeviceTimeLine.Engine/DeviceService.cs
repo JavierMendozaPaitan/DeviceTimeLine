@@ -66,6 +66,17 @@ namespace DeviceTimeLine.Engine
             await Task.Run(() => _deviceRepositoryService.RemoveDevice(deviceRepository));
         }
 
+        public async void DeleteDeviceTimeStatusAsync(string deviceTimeStatusId)
+        {
+            if (string.IsNullOrEmpty(deviceTimeStatusId)) return;
+            var deviceTimeStatus = new DeviceTimeStatusRepository
+            {
+                Id = deviceTimeStatusId
+            };
+
+            await Task.Run(() => _deviceTimeStatusService.RemoveDeviceTimeStatus(deviceTimeStatus));
+        }
+
         public async Task<List<DeviceViewModel>> GetDevicesAsync()
         {
             var deviceViewList = new List<DeviceViewModel>();
@@ -94,6 +105,7 @@ namespace DeviceTimeLine.Engine
             {
                 var deviceTimeStatus = new DeviceTimeStatus
                 {
+                    Id = device.Id,
                     SerialNumber= device.SerialNumber,
                     Status = (DeviceStatus)Enum.Parse(typeof(DeviceStatus), device.Status.ToString()),
                     StartDate = device.StartDate,
