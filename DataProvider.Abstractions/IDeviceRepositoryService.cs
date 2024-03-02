@@ -11,6 +11,6 @@ namespace DataProvider.Abstractions
     {
         Task<List<DeviceRepository>> GetDevicesAsync();
         void AddDevice(DeviceRepository device);
-        void RemoveDevice(DeviceRepository device);
+        void RemoveDeviceById(string id);
     }
 }

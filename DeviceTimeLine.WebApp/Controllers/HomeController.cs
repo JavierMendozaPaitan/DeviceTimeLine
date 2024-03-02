@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using DeviceTimeLine.Abstractions;
 using DeviceTimeLine.Models;
+using DeviceTimeLine.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DeviceTimeLine.WebApp.Controllers

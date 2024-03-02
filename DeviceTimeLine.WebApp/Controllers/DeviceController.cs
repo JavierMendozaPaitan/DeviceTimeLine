@@ -73,11 +73,11 @@ namespace DeviceTimeLine.WebApp.Controllers
         }
 
         // GET: DeviceController/Delete/5
-        public IActionResult Delete(string id)
+        public IActionResult Delete(string id, string serialNumber)
         {
             if (id.Equals(Guid.Empty)) return NotFound();
 
-            _deviceService.DeleteDeviceAsync(id);
+            _deviceService.DeleteDeviceAndTimeStatusAsync(id, serialNumber);
 
             return RedirectToAction(nameof(Index), "Home");
         }

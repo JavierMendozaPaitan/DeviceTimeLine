@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DataProvider.Abstractions;
 using DataProvider.Models;
+using MongoDB.Driver;
 
 namespace DataProvider.Engine
 {
@@ -28,9 +29,11 @@ namespace DataProvider.Engine
             return devices;
         }
 
-        public void RemoveDevice(DeviceRepository device)
+        public async void RemoveDeviceById(string id)
         {
-            _deviceCollection.Remove(device);
+            if(string.IsNullOrEmpty(id)) throw new ArgumentNullException(id);
+            var filter = Builders<DeviceRepository>.Filter.Eq(x => x.Id, id);   
+            await _deviceCollection.Collection.DeleteOneAsync(filter);
         }
     }
 }

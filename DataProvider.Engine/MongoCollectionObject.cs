@@ -36,38 +36,12 @@ namespace DataProvider.Engine
             await _collection.InsertOneAsync(obj);
         }
 
-        public async void Remove(T obj)
-        {
-            if (obj == null) throw new ArgumentNullException(nameof(obj));
-
-            await _collection.DeleteOneAsync<T>(x => ((ICollectionRepository)x).Id == ((ICollectionRepository)obj).Id);
-        }
-
         public async Task<List<T>> SelectAll()
         {
             var list = await _collection.FindAsync(new BsonDocument());
 
             return list.ToList();
         }
-
-        public T SelectById(string id)
-        {
-            var obj = _collection.Find(x => ((ICollectionRepository)x).Id == id).FirstOrDefault();
-
-            return obj;
-        }
-
-        public void Update(T obj)
-        {
-            if (obj == null ) return;
-
-            T dbobj = SelectById(((ICollectionRepository)obj).Id ?? string.Empty);
-
-            if (dbobj == null ) return;
-
-            ((ICollectionRepository)obj).CreateDate = ((ICollectionRepository)dbobj).CreateDate;
-            ((ICollectionRepository)obj).UpdateDate = DateTime.Now;
-            _collection.ReplaceOne(x => ((ICollectionRepository)x).Id == ((ICollectionRepository)obj).Id, obj);
-        }
+        
     }
 }

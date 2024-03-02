@@ -13,6 +13,7 @@ namespace DeviceTimeLine.Abstractions
         Task<List<DeviceViewModel>> GetDevicesAsync();
         void CreateDeviceAsync(DeviceViewModel device);
         void DeleteDeviceAsync(string deviceId);
+        void DeleteDeviceAndTimeStatusAsync(string deviceId, string deviceSerialNumber);
         Task<List<DeviceTimeStatus>> GetDeviceTimeStatusListAsync();
         void AddDeviceTimeStatusAsync(DeviceTimeStatus deviceTimeStatus);
         void DeleteDeviceTimeStatusAsync(string deviceTimeStatusId);

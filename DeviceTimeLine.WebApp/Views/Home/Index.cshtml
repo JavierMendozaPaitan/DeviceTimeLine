@@ -80,7 +80,7 @@
                 </td>
                 <td>                    
                     <a asp-controller="Device" asp-action="AddDeviceTimeStatus" >Add TimeStatus</a> |
-                    <a asp-controller="Device" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a asp-controller="Device" asp-action="Delete" asp-route-id="@item.Id" asp-route-serialNumber="@item.SerialNumber">Delete</a>
                 </td>
             </tr>
         }

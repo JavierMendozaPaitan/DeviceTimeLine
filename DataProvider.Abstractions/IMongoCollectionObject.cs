@@ -11,10 +11,7 @@ namespace DataProvider.Abstractions
     {
         IMongoCollection<T> Collection { get; }
         IMongoDatabaseObject Database { get; }
-        T SelectById(string id);
         void Insert(T obj);
-        void Update(T obj);
-        void Remove(T obj);
         Task<List<T>> SelectAll();
     }
 }

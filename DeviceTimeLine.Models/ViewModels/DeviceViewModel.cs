@@ -8,6 +8,14 @@ namespace DeviceTimeLine.Models.ViewModels
 {
     public class DeviceViewModel
     {
+        public DeviceViewModel()
+        {
+            Id = string.Empty;
+            SerialNumber = string.Empty;
+            DeviceName = string.Empty;
+            CurrentStatus = DeviceStatus.Unknown;
+            LastUpdateDate = DateTime.Now;
+        }
         public string? Id { get; set; }
         public string? SerialNumber { get; set; }
         public string? DeviceName { get; set; }

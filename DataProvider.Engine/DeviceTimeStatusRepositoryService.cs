@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DataProvider.Abstractions;
 using DataProvider.Models;
+using MongoDB.Driver;
 
 namespace DataProvider.Engine
 {
@@ -28,9 +29,18 @@ namespace DataProvider.Engine
             return deviceTimeStatuses;
         }
 
-        public void RemoveDeviceTimeStatus(DeviceTimeStatusRepository deviceTimeStatus)
+        public async void RemoveBySerialNumber(string serialNumber)
         {
-            _deviceTimeStatus.Remove(deviceTimeStatus);
+            if (string.IsNullOrEmpty(serialNumber)) throw new ArgumentNullException(serialNumber);
+            var filter = Builders<DeviceTimeStatusRepository>.Filter.Eq(x => x.SerialNumber, serialNumber);
+            await _deviceTimeStatus.Collection.DeleteManyAsync(filter);
+        }
+
+        public async void RemoveDeviceTimeStatusById(string id)
+        {
+            if (string.IsNullOrEmpty(id)) throw new ArgumentNullException(id);
+            var filter = Builders<DeviceTimeStatusRepository>.Filter.Eq(x => x.Id, id);
+            await _deviceTimeStatus.Collection.DeleteOneAsync(filter);
         }
     }
 }
