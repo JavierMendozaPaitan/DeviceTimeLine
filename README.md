@@ -1,1 +1,3 @@
 # DeviceTimeLine
+This application permits create Devices and history of them according to their Serial Numbers, using different status and time intervals. These information is shown in a TimeLine chart to visualize globally the status of different devices simultaneously, so it is possible to know the global situation of them and their availability.
+There are three layers following MVC, controllers and chtml pages, a middle layer who gets information from the model layer and maps with the view models, and the model layer which interacts with a MongoDB database. There are sync and async methods.
